@@ -126,7 +126,8 @@ jobs:
           run: |
             echo "${{ secrets.AWS_PEM }}" > test.pem
             chmod 400 test.pem
-            ansible-playbook -vvv ansible/ec2_deploy.yml --user ec2-user --key-file test.pem -e "access_key=${AWS_ACCESS_KEY_ID}" -e "secret_key=${AWS_SECRET_ACCESS_KEY}" -e "session_token=${AWS_SESSION_TOKEN}"
+            cd ansible
+            ansible-playbook -vvv ec2_deploy.yml --user ec2-user --key-file test.pem -e "access_key=${AWS_ACCESS_KEY_ID}" -e "secret_key=${AWS_SECRET_ACCESS_KEY}" -e "session_token=${AWS_SESSION_TOKEN}"
           env:
             AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
             AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
