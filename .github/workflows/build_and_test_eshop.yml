@@ -136,20 +136,14 @@ jobs:
           run: ansible-playbook ansible/ec2_deploy.yml
 
         - name: Deploy to EC2
-          run: ansible-playbook -i inventory/ec2.py playbook.yml --private-key=key.pem
+          run: ansible-playbook ansible/ec2_deploy.yml --private-key=test.pem
           env:
             AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
             AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            AWS_SECRET_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
 
 
-        - name: Ansible Deployment Action
-          uses: gbh-tech/ansible-deployment-action@v0.0.3
-          with:
-            playbook_path: 'ansible'
-            playbook_name: 'ec2_deploy.yml'
-            aws_region: 'us-east-1'
-            aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-            aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        
             
 
 
