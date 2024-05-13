@@ -52,12 +52,13 @@
         name: docker
         state: started
         enabled: yes
+
     - name: Set proper rights to Docker service
       shell: usermod -a -G docker ec2-user
 
     - name: Fetch eshop from Git
       git:
-        repo: 'https://github.com/TPackT/vse_devops.git'
+        repo: 'https://github.com/TPackT/vse_devops_final.git'
         dest: ./app
 
     - name: Build Eshop Docker image
