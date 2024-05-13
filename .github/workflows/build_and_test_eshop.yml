@@ -111,20 +111,10 @@ jobs:
           with:
             token: ${{ secrets.WORKFLOW_TOKEN }}
 
-        - name: Load Node modules and build folder
-          uses: actions/cache@v4.0.2
-          with:
-            path: |
-              ~/.npm
-              ./node_modules
-              ./build
-            key: ${{ runner.os }}-build-${{ github.run_id }}
-
-
         - name: Setup Python
           uses: actions/setup-python@v5.1.0
           with:
-            python-version: 3
+            python-version: '3.x'
 
         - name: Install dependencies
           run: |
@@ -136,7 +126,7 @@ jobs:
           run: |
             echo "${{ secrets.AWS_PEM }}" > test.pem
             chmod 400 test.pem
-            ansible-playbook ansible/ec2_deploy.yml --user ec2-user --key-file test.pem -e "access_key=${AWS_ACCESS_KEY_ID}" -e "secret_key=${AWS_SECRET_ACCESS_KEY}" -e "session_token=${AWS_SESSION_TOKEN}"
+            ansible-playbook ansible/ec2_deploy.yml --user ec2-user --key-file .../test.pem -e "access_key=${AWS_ACCESS_KEY_ID}" -e "secret_key=${AWS_SECRET_ACCESS_KEY}" -e "session_token=${AWS_SESSION_TOKEN}"
           env:
             AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
             AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
