@@ -134,6 +134,7 @@ jobs:
 
         - name: Deploy to EC2
           run: |
+
           cd ansible
           ansible-playbook ec2_deploy.yml
           env:
