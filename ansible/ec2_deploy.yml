@@ -9,7 +9,7 @@
         image_id: ami-04e5276ebb8451442
         region: us-east-1
         key_name: test
-        vpc_subnet_id: subnet-032474aef927b4494
+        vpc_subnet_id: subnet-0b96ad66b9afaed82 
         tags:
           Name: Eshop
         count: 1
