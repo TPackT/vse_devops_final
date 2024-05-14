@@ -107,7 +107,7 @@
 
     - name: Sort instances by launch time
       set_fact:
-        sorted_instaces_list: "{{ instances_list.instances | sort(attribute='launch_time', reverse=true) | map(attribute='instance_id') }}"
+        sorted_instances_list: "{{ instances_list.instances | sort(attribute='launch_time', reverse=true) | map(attribute='instance_id') }}"
       when: instances_list.instances | length > 0
 
     - name: Exclude last created instance
