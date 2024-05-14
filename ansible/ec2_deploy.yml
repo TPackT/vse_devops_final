@@ -39,8 +39,7 @@
   hosts: launched
   connection: ssh
   become: yes
-  vars:
-    ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+  
 
   tasks:
     - name: Install Git and Docker
@@ -83,7 +82,7 @@
         port:
           80
 
-##-----------------------------------
+##----------------------------------- terminate previous instances
 
 - name: Terminate previous EC2 instances
   hosts: localhost
@@ -101,12 +100,12 @@
         security_token: '{{ session_token }}'
       register: all_instances
 
-    - name: List and sort instances
+    - name: Sort instances by launch time
       set_fact:
         instances_list: "{{ all_instances.instances | sort(attribute='launch_time', reverse=true) | map(attribute='instance_id') }}"
       when: all_instances.instances | length > 0
 
-    - name: Exclude the newly created instance
+    - name: Exclude last created instance
       set_fact:
         instances_to_terminate: '{{ instances_to_terminate + [item] }}'
       loop: '{{ instances_list[1:] }}'
