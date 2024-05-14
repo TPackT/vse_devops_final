@@ -39,8 +39,7 @@
   hosts: launched
   connection: ssh
   become: yes
-  vars:
-    ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+  
 
   tasks:
     - name: Install Git and Docker
@@ -84,13 +83,12 @@
           80
 
 
-
 ##----------------------------------- terminate previous instances
 
 - name: Terminate previous EC2 instances
   hosts: localhost
   connection: local
-  gather_facts: no
+
 
   tasks:
     - name: Find all running instances via tag
@@ -103,7 +101,6 @@
         aws_secret_key: '{{ secret_key }}'
         security_token: '{{ session_token }}'
       register: instances_list
-
 
     - name: Sort instances by launch time
       set_fact:
@@ -118,6 +115,7 @@
         to_terminate_list: []
       when: sorted_instances_list | length > 0
 
+
     - name: Terminate instances
       ec2_instance:
         state: 'absent'
@@ -127,3 +125,4 @@
         security_token: '{{ session_token }}'
         region: us-east-1
       when: to_terminate_list and to_terminate_list | length > 0
+
