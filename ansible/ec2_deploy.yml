@@ -91,6 +91,8 @@
 
   tasks:
     - name: Find all running instances via tag
+      debug:
+        var: instaces_list
       ec2_instance_info:
         filters:
           'tag:Name': 'Eshop'
