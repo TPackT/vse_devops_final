@@ -3,6 +3,8 @@ name: Build and test eshop workflow
 on: 
   workflow_dispatch:
   push: 
+ 
+
 
 jobs:
   Install:
@@ -102,7 +104,7 @@ jobs:
 
   Deploy:
       needs: [ Build, Test ]
-      if: ${{ github.ref == 'refs/heads/main' }}
+      #if: ${{ github.ref == 'refs/heads/main' }}
       runs-on: ubuntu-latest
 
       steps:
@@ -127,13 +129,16 @@ jobs:
           run: |
             echo "${{ secrets.AWS_PEM }}" > test.pem
             chmod 400 test.pem
-            cd ansible
-            sudo ansible-playbook ec2_deploy.yml --user ec2-user --key-file ../test.pem -e "access_key=${AWS_ACCESS_KEY_ID}" -e "secret_key=${AWS_SECRET_ACCESS_KEY}" -e "session_token=${AWS_SESSION_TOKEN}"
+            sudo ansible-playbook ansible/ec2_deploy.yml --user ec2-user --key-file test.pem -e "access_key=${AWS_ACCESS_KEY_ID}" -e "secret_key=${AWS_SECRET_ACCESS_KEY}" -e "session_token=${AWS_SESSION_TOKEN}"
             rm test.pem
           env:
             AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
             AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
             AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+
+
+
+
 
 
 
