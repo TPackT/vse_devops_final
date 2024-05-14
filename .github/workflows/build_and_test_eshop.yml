@@ -3,6 +3,8 @@ name: Build and test eshop workflow
 on: 
   workflow_dispatch:
   push: 
+    branches:
+      - main
    
 
 jobs:
@@ -103,7 +105,7 @@ jobs:
 
   Deploy:
       needs: [ Build, Test ]
-      #if: ${{ github.ref == 'refs/heads/main' }}
+      if: ${{ github.ref == 'refs/heads/main' }}
       runs-on: ubuntu-latest
 
       steps:
