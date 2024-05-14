@@ -104,9 +104,6 @@
         security_token: '{{ session_token }}'
       register: instances_list
 
-    - name: Print list
-      debug:
-        var: instances_list
 
     - name: Sort instances by launch time
       set_fact:
