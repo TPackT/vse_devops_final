@@ -124,4 +124,3 @@
         region: us-east-1
       when: to_terminate_list and to_terminate_list | length > 0
 
-
