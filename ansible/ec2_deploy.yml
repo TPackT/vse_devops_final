@@ -115,7 +115,7 @@
       loop: '{{ sorted_instances_list[1:] }}'
       vars:
         to_terminate_list: []
-      when: sorted_instances_list | length > 0
+      when: sorted_instances_list | length > 1
 
 
     - name: Terminate instances
